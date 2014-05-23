@@ -3,7 +3,7 @@ require "test/unit"
  
 class TestStringCalculator < Test::Unit::TestCase
  
-  def test_simple
-    assert_equal true, false
+  def test_add_with_empty_string
+    assert_equal 0, StringCalculator.new.add("")
   end
 end
