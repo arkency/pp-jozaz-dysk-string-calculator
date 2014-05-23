@@ -15,7 +15,11 @@ class TestStringCalculator < Test::Unit::TestCase
     assert_equal 3, StringCalculator.new.add("1,2")
   end
 
-  def test_add_unknow_amount_of_numbers
+  def test_add_unknown_amount_of_numbers
     assert_equal 5, StringCalculator.new.add("1,1,1,1,1")
+  end
+
+  def test_new_line_is_a_separator
+    assert_equal 6, StringCalculator.new.add("1\n2,3")
   end
 end
