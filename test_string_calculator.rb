@@ -22,4 +22,8 @@ class TestStringCalculator < Test::Unit::TestCase
   def test_new_line_is_a_separator
     assert_equal 6, StringCalculator.new.add("1\n2,3")
   end
+
+  def test_change_to_custom_delimiter
+    assert_equal 3, StringCalculator.new.add("//;\n1;2")
+  end
 end
