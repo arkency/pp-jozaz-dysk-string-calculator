@@ -14,4 +14,8 @@ class TestStringCalculator < Test::Unit::TestCase
   def test_add_two_numbers
     assert_equal 3, StringCalculator.new.add("1,2")
   end
+
+  def test_add_unknow_amount_of_numbers
+    assert_equal 5, StringCalculator.new.add("1,1,1,1,1")
+  end
 end
