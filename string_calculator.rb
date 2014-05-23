@@ -5,6 +5,7 @@ class StringCalculator
   end
 
   def add(expression)
-    0 if expression == ''
+    return 0 if expression == ''
+    return expression.to_i
   end
 end
