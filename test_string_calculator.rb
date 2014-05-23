@@ -6,4 +6,8 @@ class TestStringCalculator < Test::Unit::TestCase
   def test_add_with_empty_string
     assert_equal 0, StringCalculator.new.add("")
   end
+
+  def test_add_only_one_number
+    assert_equal 1, StringCalculator.new.add('1')
+  end
 end
