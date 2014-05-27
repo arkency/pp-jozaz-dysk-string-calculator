@@ -26,4 +26,20 @@ class TestStringCalculator < Test::Unit::TestCase
   def test_change_to_custom_delimiter
     assert_equal 3, StringCalculator.new.add("//;\n1;2")
   end
+
+  def test_should_throw_exepction_when_negative_number
+    assert_raise StringCalculator::NegativeNumberError.new do
+      StringCalculator.new.add("1,-1")
+    end
+  end
+
+  def test_error_message_should_contain_negative_number
+    assert_raise StringCalculator::NegativeNumberError.new('negatives not allowed: -1') do
+      StringCalculator.new.add("1,-1")
+    end
+
+    assert_raise StringCalculator::NegativeNumberError.new('negatives not allowed: -1, -2, -3') do
+      StringCalculator.new.add("-1,-2,-3")
+    end
+  end
 end
