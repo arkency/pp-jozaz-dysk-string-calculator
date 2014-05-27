@@ -42,4 +42,9 @@ class TestStringCalculator < Test::Unit::TestCase
       StringCalculator.new.add("-1,-2,-3")
     end
   end
+
+  def test_add_ignores_numbers_gt_1000
+    assert_equal 1002, StringCalculator.new.add("1000,2")
+    assert_equal 2,    StringCalculator.new.add("1001,2")
+  end
 end
