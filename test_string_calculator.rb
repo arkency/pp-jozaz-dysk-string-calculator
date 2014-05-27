@@ -28,17 +28,17 @@ class TestStringCalculator < Test::Unit::TestCase
   end
 
   def test_should_throw_exepction_when_negative_number
-    assert_raise StringCalculator::NegativeNumberError.new do
+    assert_raise StringCalculator::NegativeNumberError do
       StringCalculator.new.add("1,-1")
     end
   end
 
   def test_error_message_should_contain_negative_number
-    assert_raise StringCalculator::NegativeNumberError.new('negatives not allowed: -1') do
+    assert_raise_with_message StringCalculator::NegativeNumberError, 'negatives not allowed: -1' do
       StringCalculator.new.add("1,-1")
     end
 
-    assert_raise StringCalculator::NegativeNumberError.new('negatives not allowed: -1, -2, -3') do
+    assert_raise_with_message StringCalculator::NegativeNumberError, 'negatives not allowed: -1, -2, -3' do
       StringCalculator.new.add("-1,-2,-3")
     end
   end

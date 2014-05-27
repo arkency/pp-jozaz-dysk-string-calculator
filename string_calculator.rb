@@ -1,5 +1,5 @@
 class StringCalculator
-
+  NegativeNumberError = Class.new(StandardError)
 
   def initialize
 
@@ -12,6 +12,12 @@ class StringCalculator
       expression = expression[4..-1]
     end
     numbers = expression.split(/(#{delimiter}|\n)/).map {|x| x.to_i}
+
+    negatives = numbers.select {|element| element < 0}
+    if negatives.any?
+      raise NegativeNumberError.new("negatives not allowed: #{negatives.join(', ')}")
+    end
+
     numbers.inject(0, :+)
   end
 
