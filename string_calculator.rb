@@ -9,6 +9,7 @@ class StringCalculator
     expression, delimiter = set_expression_and_delimiter(expression)
     numbers = get_numbers(expression, delimiter)
     check_for_negatives(numbers)
+    numbers = delete_greater_than_1000(numbers)
     sum(numbers)
   end
 
@@ -27,6 +28,10 @@ class StringCalculator
     if negatives.any?
       raise NegativeNumberError.new("negatives not allowed: #{negatives.join(', ')}")
     end
+  end
+
+  def delete_greater_than_1000(numbers)
+    numbers.select {|x| x <= 1000}
   end
 
   def set_expression_and_delimiter(expression)
