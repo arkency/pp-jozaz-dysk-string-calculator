@@ -47,4 +47,8 @@ class TestStringCalculator < Test::Unit::TestCase
     assert_equal 1002, StringCalculator.new.add("1000,2")
     assert_equal 2,    StringCalculator.new.add("1001,2")
   end
+
+  def test_custom_delimiters_longer_than_one_char
+    assert_equal 4, StringCalculator.new.add("//***\n1***3")
+  end
 end
