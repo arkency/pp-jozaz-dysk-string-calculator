@@ -36,14 +36,14 @@ class StringCalculator
 
   def set_expression_and_delimiter(expression)
     if custom_delimiter?(expression)
-      delimiter  = expression[2]
-      expression = expression[4..-1]
+      delimiter  = expression.split("\n").first.gsub('//','')
+      expression = expression[delimiter.length+2..-1]
     else
       delimiter  = ','
       expression = expression
     end
 
-    return expression, delimiter
+    return expression, Regexp.escape(delimiter)
   end
 
   def sum(numbers)
