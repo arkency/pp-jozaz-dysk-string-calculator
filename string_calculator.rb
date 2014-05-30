@@ -24,10 +24,14 @@ class StringCalculator
   end
 
   def check_for_negatives(numbers)
-    negatives = numbers.select {|element| element < 0}
+    negatives = negatives(numbers)
     if negatives.any?
       raise NegativeNumberError.new("negatives not allowed: #{negatives.join(', ')}")
     end
+  end
+
+  def negatives(numbers)
+    numbers.select { |element| element < 0 }
   end
 
   def delete_greater_than_1000(numbers)
