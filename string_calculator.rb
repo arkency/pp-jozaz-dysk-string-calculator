@@ -1,10 +1,6 @@
 class StringCalculator
   NegativeNumberError = Class.new(StandardError)
 
-  def initialize
-
-  end
-
   def add(expression)
     expression, delimiter = set_expression_and_delimiter(expression)
     numbers = get_numbers(expression, delimiter)
