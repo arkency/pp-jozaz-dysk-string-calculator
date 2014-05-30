@@ -25,9 +25,11 @@ class StringCalculator
 
   def check_for_negatives(numbers)
     negatives = negatives(numbers)
-    if negatives.any?
-      raise NegativeNumberError.new("negatives not allowed: #{negatives.join(', ')}")
-    end
+    raise_negatives(negatives) if negatives.any?
+  end
+
+  def raise_negatives(negatives)
+    raise NegativeNumberError.new("negatives not allowed: #{negatives.join(', ')}")
   end
 
   def negatives(numbers)
