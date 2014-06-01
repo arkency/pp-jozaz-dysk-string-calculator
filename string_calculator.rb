@@ -1,9 +1,55 @@
+class Delimiters
+
+  def self.custom_delimiters?(expression)
+    expression.start_with?('//')
+  end
+
+  def initialize(line)
+    @line = line
+    set_delimiters
+  end
+
+  def to_s
+    @delimiters.join('|')
+  end
+
+  private
+
+  def set_delimiters
+    @delimiters = []
+    @line.gsub(/\[?[^\[^\]]+\]?/) do |match|
+      @delimiters << Regexp.escape(match.delete('[').delete(']'))
+    end
+    @delimiters = [','] if @delimiters.empty?
+  end
+end
+
+class Expression
+
+  attr_reader :delimiters_line, :numbers_line
+
+  def initialize(line)
+    if Delimiters.custom_delimiters?(line)
+      line = line.split("\n")
+      @delimiters_line = line.shift.delete('/')
+      @numbers_line = line.join("\n")
+    else
+      @delimiters_line = ''
+      @numbers_line = line
+    end
+  end
+end
+
+
+
 class StringCalculator
   NegativeNumberError = Class.new(StandardError)
 
   def add(expression)
-    expression, delimiter = set_expression_and_delimiter(expression)
-    numbers = get_numbers(expression, delimiter)
+    expression = Expression.new(expression)
+    delimiters = Delimiters.new(expression.delimiters_line)
+    expression = expression.numbers_line
+    numbers = get_numbers(expression, delimiters)
     check_for_negatives(numbers)
     numbers = delete_greater_than_1000(numbers)
     sum(numbers)
@@ -11,12 +57,8 @@ class StringCalculator
 
   private
 
-  def custom_delimiter?(expression)
-    expression.start_with?('//')
-  end
-
-  def get_numbers(expression, delimiter)
-    expression.split(/(#{delimiter}|\n)/).map {|x| x.to_i}
+  def get_numbers(expression, delimiters)
+    expression.split(/(#{delimiters}|\n)/).map {|x| x.to_i}
   end
 
   def check_for_negatives(numbers)
