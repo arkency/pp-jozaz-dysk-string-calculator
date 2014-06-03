@@ -4,8 +4,8 @@ class StringCalculator
   def add(expression)
     expression = Expression.new(expression)
     delimiters = Delimiters.new(expression.delimiters_line)
-    expression = expression.numbers_line
-    numbers = get_numbers(expression, delimiters)
+    numbers_line = expression.numbers_line
+    numbers = get_numbers(numbers_line, delimiters)
     check_for_negatives(numbers)
     numbers = delete_greater_than_1000(numbers)
     sum(numbers)
