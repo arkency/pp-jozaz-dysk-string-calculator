@@ -1,47 +1,3 @@
-class Delimiters
-
-  def self.custom_delimiters?(expression)
-    expression.start_with?('//')
-  end
-
-  def initialize(line)
-    @line = line
-    set_delimiters
-  end
-
-  def to_s
-    @delimiters.join('|')
-  end
-
-  private
-
-  def set_delimiters
-    @delimiters = []
-    @line.gsub(/\[?[^\[^\]]+\]?/) do |match|
-      @delimiters << Regexp.escape(match.delete('[').delete(']'))
-    end
-    @delimiters = [','] if @delimiters.empty?
-  end
-end
-
-class Expression
-
-  attr_reader :delimiters_line, :numbers_line
-
-  def initialize(line)
-    if Delimiters.custom_delimiters?(line)
-      line = line.split("\n")
-      @delimiters_line = line.shift.delete('/')
-      @numbers_line = line.join("\n")
-    else
-      @delimiters_line = ''
-      @numbers_line = line
-    end
-  end
-end
-
-
-
 class StringCalculator
   NegativeNumberError = Class.new(StandardError)
 
@@ -103,5 +59,48 @@ class StringCalculator
 
   def sum(numbers)
     numbers.inject(0, :+)
+  end
+end
+
+
+class Delimiters
+
+  def self.custom_delimiters?(expression)
+    expression.start_with?('//')
+  end
+
+  def initialize(line)
+    @line = line
+    set_delimiters
+  end
+
+  def to_s
+    @delimiters.join('|')
+  end
+
+  private
+
+  def set_delimiters
+    @delimiters = []
+    @line.gsub(/\[?[^\[^\]]+\]?/) do |match|
+      @delimiters << Regexp.escape(match.delete('[').delete(']'))
+    end
+    @delimiters = [','] if @delimiters.empty?
+  end
+end
+
+class Expression
+
+  attr_reader :delimiters_line, :numbers_line
+
+  def initialize(line)
+    if Delimiters.custom_delimiters?(line)
+      line = line.split("\n")
+      @delimiters_line = line.shift.delete('/')
+      @numbers_line = line.join("\n")
+    else
+      @delimiters_line = ''
+      @numbers_line = line
+    end
   end
 end
